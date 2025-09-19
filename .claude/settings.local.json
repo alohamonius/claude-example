@@ -1,0 +1,12 @@
+{
+  "env": {
+    "DATABASE_URI": "postgresql://user:password@localhost:5432/showcase",
+    "PAYLOAD_SECRET": "your-payload-secret-here"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(docker:*)",
+      "Bash(docker-compose:*)"
+    ]
+  }
+}

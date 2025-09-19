@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm:*)",
+      "Bash(pnpm:*)",
+      "Bash(git:*)",
+      "Bash(node:*)",
+      "Bash(npx:*)",
+      "Read",
+      "Write",
+      "Edit",
+      "MultiEdit",
+      "Grep",
+      "Glob",
+      "LS",
+      "Task",
+      "mcp__postgres__*",
+      "mcp__playwright__*"
+    ],
+    "deny": [
+      "Bash(curl:*)",
+      "Bash(wget:*)",
+      "Bash(rm:-rf:*)",
+      "WebFetch",
+      "WebSearch"
+    ]
+  },
+
+  "env": {
+    "NODE_OPTIONS": "--no-deprecation --max-old-space-size=8000",
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "1",
+    "MCP_TIMEOUT": "30000",
+    "MCP_TOOL_TIMEOUT": "60000"
+  },
+  "enableAllProjectMcpServers": true,
+  "cleanupPeriodDays": 30,
+  "includeCoAuthoredBy": true
+}

@@ -1,0 +1,33 @@
+{
+  "name": "claude-code-showcase",
+  "version": "1.0.0",
+  "description": "Claude Code showcase with specialized agents and MCP integrations",
+  "type": "module",
+  "scripts": {
+    "dev": "cd demo && pnpm dev",
+    "build": "cd demo && pnpm build", 
+    "start": "cd demo && pnpm start",
+    "test": "cd demo && pnpm test",
+    "test:e2e": "cd demo && pnpm test:e2e",
+    "test:int": "cd demo && pnpm test:int",
+    "lint": "cd demo && pnpm lint",
+    "setup": "cd demo && pnpm install"
+  },
+  "workspaces": [
+    "demo"
+  ],
+  "keywords": [
+    "claude-code",
+    "mcp",
+    "agents", 
+    "payload-cms",
+    "nextjs",
+    "postgresql",
+    "playwright"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": "^18.20.2 || >=20.9.0",
+    "pnpm": "^9 || ^10"
+  }
+}
