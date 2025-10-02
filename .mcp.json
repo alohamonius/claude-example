@@ -19,6 +19,10 @@
       "env": {
         "REF_API_KEY": "ref-x"
       }
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["-y", "chrome-devtools-mcp@latest"]
     }
   }
 }
