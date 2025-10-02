@@ -17,6 +17,7 @@ description: Commit changes and create pull request with proper branch workflow
 Implement a smart git workflow with two scenarios:
 
 ### Scenario A: Currently on base branch (main/master)
+
 **NEVER push directly to base branch!**
 
 1. Analyze the unstaged changes using `git diff` and `git status`
@@ -29,6 +30,7 @@ Implement a smart git workflow with two scenarios:
 8. Create PR to base branch using `gh pr create`
 
 ### Scenario B: Already on a feature branch
+
 1. Check for unpushed commits using `git log origin/<base>..HEAD`
 2. Stage any remaining unstaged changes: `git add .`
 3. If there are staged changes, create a commit with a descriptive message
@@ -39,6 +41,7 @@ Implement a smart git workflow with two scenarios:
    - Create detailed description covering all commits and their purposes
 
 ### PR Creation Requirements
+
 - Title: Clear, concise summary of all changes
 - Description:
   - Summary section with bullet points of key changes
@@ -46,4 +49,4 @@ Implement a smart git workflow with two scenarios:
   - Test plan if applicable
   - Reference any relevant issues
 
-**Important**: Always determine the base branch dynamically (check for main or master) and never push directly to it.
+**Important**: Always determine the base branch dynamically (check for main or master or dev) and never push directly to it.
