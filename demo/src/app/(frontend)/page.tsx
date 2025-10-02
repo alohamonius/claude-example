@@ -15,6 +15,7 @@ export default async function HomePage() {
 
   const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
 
+  console.error('BAD TYPE')
   return (
     <div className="home">
       <div className="content">
