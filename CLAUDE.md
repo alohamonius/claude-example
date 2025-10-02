@@ -53,3 +53,4 @@ This is a comprehensive demonstration of Claude Code capabilities with specializ
 - TypeScript throughout
 - Playwright (E2E) + Vitest (integration testing)
 - pnpm workspaces
+- this is demo claude project
