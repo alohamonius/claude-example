@@ -1,5 +1,6 @@
 {
   "permissions": {
+    "defaultMode": "plan",
     "allow": [
       "Bash(npm:*)",
       "Bash(pnpm:*)",
@@ -34,5 +35,5 @@
   },
   "enableAllProjectMcpServers": true,
   "cleanupPeriodDays": 30,
-  "includeCoAuthoredBy": true
+  "includeCoAuthoredBy": false
 }
