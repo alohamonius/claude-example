@@ -5,13 +5,12 @@
       "args": [
         "-y",
         "@modelcontextprotocol/server-postgres",
-        "postgresql://postgres:password@localhost:5433/demo-db-claude"
+        "postgres://postgres:password@localhost:5433/demo-db-claude"
       ]
     },
     "playwright": {
       "command": "npx",
-      "args": ["@playwright/mcp@latest"],
-      "cwd": "./demo"
+      "args": ["@playwright/mcp@latest"]
     },
     "Ref": {
       "command": "npx",
@@ -23,6 +22,10 @@
     "chrome-devtools": {
       "command": "npx",
       "args": ["-y", "chrome-devtools-mcp@latest"]
+    },
+    "jam": {
+      "type": "http",
+      "url": "https://mcp.jam.dev/mcp"
     }
   }
 }
