@@ -45,28 +45,54 @@ Blog posts in PostgreSQL (viewable in Payload admin)
 
 ## Hooks
 
-### SubagentStop Hook
+### Subagent Lifecycle Logging
+
+Complete tracking of all subagent activities with three hooks:
+
+#### 1. PreToolUse Hook (START)
+- **File**: `.claude/hooks/log-subagent-pre.mjs`
+- **Matcher**: `Task`
+- **Trigger**: Before subagent begins execution
+- **Action**: Logs subagent START with task description
+- **Format**: `[timestamp] PRE | Agent: {name} | Task: {description} | Session: {id}`
+
+#### 2. SubagentStop Hook (STOP)
 - **File**: `.claude/hooks/log-subagent-history.mjs`
-- **Trigger**: When any subagent (Task tool) completes
-- **Action**: Logs subagent activity to `.claude/subagent-history.log`
-- **Purpose**: Track all subagent activities across sessions
-- **Configuration**: `.claude/settings.json`
+- **Trigger**: When subagent execution stops
+- **Action**: Logs subagent STOP event
+- **Format**: `[timestamp] STOP | Agent: {name} | Session: {id}`
 
-**Log Format**:
+#### 3. PostToolUse Hook (RESULT)
+- **File**: `.claude/hooks/log-subagent-post.mjs`
+- **Matcher**: `Task`
+- **Trigger**: After subagent completes (has results)
+- **Action**: Logs SUCCESS/ERROR status and extracts details
+- **Format**: `[timestamp] POST | Agent: {name} | Status: {SUCCESS|ERROR} | Details: {summary} | Session: {id}`
+
+**Complete Log Example**:
 ```
-[timestamp] Agent: {name} | Task: {description} | Session: {id}
+[2025-10-03T17:20:00.000Z] PRE | Agent: smm | Task: Generate article about AI trends | Session: abc123
+[2025-10-03T17:20:35.000Z] STOP | Agent: smm | Session: abc123
+[2025-10-03T17:20:35.100Z] POST | Agent: smm | Status: SUCCESS | Details: Created article_20251003.json | Session: abc123
+
+[2025-10-03T17:21:00.000Z] PRE | Agent: blog-admin | Task: Insert latest article to DB | Session: abc123
+[2025-10-03T17:21:10.000Z] STOP | Agent: blog-admin | Session: abc123
+[2025-10-03T17:21:10.100Z] POST | Agent: blog-admin | Status: SUCCESS | Details: Inserted ID:5, Moved to processed/ | Session: abc123
+
+[2025-10-03T17:22:00.000Z] PRE | Agent: blog-admin | Task: Process articles | Session: def456
+[2025-10-03T17:22:02.000Z] STOP | Agent: blog-admin | Session: def456
+[2025-10-03T17:22:02.100Z] POST | Agent: blog-admin | Status: ERROR | Details: No articles found in directory | Session: def456
 ```
 
-**Example Output**:
-```
-[2025-10-03T14:30:01.234Z] Agent: smm | Task: Generate blog post about AI | Session: abc123
-[2025-10-03T14:32:15.567Z] Agent: blog-admin | Task: Insert latest article to DB | Session: abc123
-```
+**Log File Locations**:
+- Per-agent logs: `.claude/logs/{agent-name}.log` (smm.log, blog-admin.log, etc.)
+- Separate files prevent file locking conflicts when multiple hooks fire simultaneously
 
-### PostToolUse Hook
+### PostToolUse Hook (Trigger blog-admin)
 - **File**: `.claude/hooks/trigger-blog-admin.mjs`
+- **Matcher**: `Write`
 - **Trigger**: When Write tool creates files in `content-generated/articles/`
-- **Action**: Automatically invokes blog-admin agent
+- **Action**: Outputs system message to suggest invoking blog-admin agent
 - **Configuration**: `.claude/settings.json`
 
 ## Database Insertion
@@ -113,11 +139,18 @@ demo/
 
 .claude/
 ├── agents/
-│   ├── smm.md          # SMM agent definition
-│   └── blog-admin.md   # Blog-admin agent definition
+│   ├── smm.md                    # SMM agent definition
+│   └── blog-admin.md             # Blog-admin agent definition
 ├── hooks/
-│   └── trigger-blog-admin.js  # PostToolUse hook script
-└── settings.json       # Hook configuration
+│   ├── log-subagent-pre.mjs      # PreToolUse hook (START)
+│   ├── log-subagent-history.mjs  # SubagentStop hook (STOP)
+│   ├── log-subagent-post.mjs     # PostToolUse hook (RESULT)
+│   └── trigger-blog-admin.mjs    # PostToolUse hook (Write trigger)
+├── logs/
+│   ├── smm.log                   # SMM agent activity log
+│   ├── blog-admin.log            # Blog-admin agent activity log
+│   └── {agent}.log               # Per-agent log files
+└── settings.json                 # Hook configuration
 ```
 
 ## Blog Collection Schema

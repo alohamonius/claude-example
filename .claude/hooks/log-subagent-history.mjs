@@ -63,20 +63,27 @@ process.stdin.on('end', () => {
       }
     }
 
-    // Create history entry
+    // Create history entry - simplified STOP event
     const timestamp = new Date().toISOString()
-    const logEntry = `[${timestamp}] Agent: ${subagentName} | Task: ${taskDescription} | Session: ${session_id}\n`
+    const logEntry = `[${timestamp}] STOP | Agent: ${subagentName} | Session: ${session_id}\n`
 
-    // Append to history file
-    const historyPath = path.join(__dirname, '..', 'subagent-history.log')
-    fs.appendFileSync(historyPath, logEntry, 'utf-8')
+    // Ensure logs directory exists
+    const logsDir = path.join(__dirname, '..', 'logs')
+    if (!fs.existsSync(logsDir)) {
+      fs.mkdirSync(logsDir, { recursive: true })
+    }
+
+    // Append to agent-specific log file
+    const agentLogPath = path.join(logsDir, `${subagentName}.log`)
+    fs.appendFileSync(agentLogPath, logEntry, 'utf-8')
 
     // Output success message
     const response = {
-      systemMessage: `📊 Logged subagent activity: ${subagentName} - "${taskDescription}"`,
+      systemMessage: `⏹️ Subagent stopped: ${subagentName}`,
       hookSpecificOutput: {
         logged: true,
         agent: subagentName,
+        phase: 'STOP',
         session: session_id
       }
     }

@@ -32,14 +32,22 @@ process.stdin.on('end', () => {
     const timestamp = new Date().toISOString()
     const logEntry = `[${timestamp}] PRE | Agent: ${subagentName} | Task: ${taskDescription} | Session: ${session_id}\n`
 
-    // Append to history file
-    const historyPath = path.join(__dirname, '..', 'subagent-history.log')
-    fs.appendFileSync(historyPath, logEntry, 'utf-8')
+    // Ensure logs directory exists
+    const logsDir = path.join(__dirname, '..', 'logs')
+    if (!fs.existsSync(logsDir)) {
+      fs.mkdirSync(logsDir, { recursive: true })
+    }
 
-    // Output success (optional, for debugging)
+    // Append to agent-specific log file
+    const agentLogPath = path.join(logsDir, `${subagentName}.log`)
+    fs.appendFileSync(agentLogPath, logEntry, 'utf-8')
+
+    // Output success with proper schema
     console.log(JSON.stringify({
       systemMessage: `🚀 Starting subagent: ${subagentName}`,
-      hookSpecificOutput: { agent: subagentName, phase: 'PRE' }
+      hookSpecificOutput: {
+        hookEventName: "PreToolUse"
+      }
     }))
 
   } catch (error) {
