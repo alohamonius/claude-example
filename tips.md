@@ -1,5 +1,5 @@
 1.Start with small features or bug fixes, tell Claude to propose a plan, and verify its suggested edits
-2.Use Plan Mode to prepare for a complex request before making changes. Press ${QX.displayText} twice to enable.
+2.Use Plan Mode to prepare for a complex request before making changes. Press '?' twice to enable.
 3.Use git worktrees to run multiple Claude sessions in parallel
 4.Run /terminal-setup to enable convenient terminal integration like Shift + Enter for new line and more
 5.Press Shift+Enter to send a multi-line message
