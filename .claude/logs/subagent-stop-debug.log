@@ -1,0 +1,23 @@
+
+[DEBUG SubagentStop] Fired at 2025-10-03T18:35:04.077Z
+[DEBUG] Full hookInput: {
+  "session_id": "d32c36a7-15bf-4d5d-a576-18a05f8c0be1",
+  "transcript_path": "/Users/macbook/.claude/projects/-Users-macbook-git-public-ai-claude-code-setup/d32c36a7-15bf-4d5d-a576-18a05f8c0be1.jsonl",
+  "cwd": "/Users/macbook/git-public/ai/claude-code-setup",
+  "permission_mode": "acceptEdits",
+  "hook_event_name": "SubagentStop",
+  "stop_hook_active": false
+}
+[DEBUG] session_id: d32c36a7-15bf-4d5d-a576-18a05f8c0be1
+[DEBUG] transcript_path: /Users/macbook/.claude/projects/-Users-macbook-git-public-ai-claude-code-setup/d32c36a7-15bf-4d5d-a576-18a05f8c0be1.jsonl
+[DEBUG] stop_hook_active: false
+[DEBUG] Transcript lines count: 17
+[DEBUG] First 500 chars of transcript:
+{"type":"file-history-snapshot","messageId":"ab41dd48-2d02-4caa-bf3a-d708ace1dff4","snapshot":{"messageId":"ab41dd48-2d02-4caa-bf3a-d708ace1dff4","trackedFileBackups":{},"timestamp":"2025-10-03T18:31:37.863Z"},"isSnapshotUpdate":false}
+{"parentUuid":null,"isSidechain":false,"userType":"external","cwd":"/Users/macbook/git-public/ai/claude-code-setup","sessionId":"d32c36a7-15bf-4d5d-a576-18a05f8c0be1","version":"2.0.5","gitBranch":"test-memory","type":"user","message":{"role":"user","content":"smm
+[DEBUG] Last 500 chars of transcript:
+d-1c6e4c42baa4","timestamp":"2025-10-03T18:33:19.072Z"}
+{"parentUuid":"58561f87-705f-4fd3-8bfd-1c6e4c42baa4","isSidechain":false,"userType":"external","cwd":"/Users/macbook/git-public/ai/claude-code-setup","sessionId":"d32c36a7-15bf-4d5d-a576-18a05f8c0be1","version":"2.0.5","gitBranch":"test-memory","type":"system","subtype":"informational","content":"🚀 Starting subagent: smm","isMeta":false,"timestamp":"2025-10-03T18:33:19.159Z","uuid":"b469c506-8396-43ce-b7ab-032371fff0f4","level":"warning"}
+
+[DEBUG] Found most recent Task tool use: smm
+[DEBUG] Final subagent name determined: smm
