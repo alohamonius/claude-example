@@ -20,9 +20,7 @@
     "deny": [
       "Bash(curl:*)",
       "Bash(wget:*)",
-      "Bash(rm:-rf:*)",
-      "WebFetch",
-      "WebSearch"
+      "Bash(rm:-rf:*)"
     ]
   },
 
@@ -34,5 +32,28 @@
   },
   "enableAllProjectMcpServers": true,
   "cleanupPeriodDays": 30,
-  "includeCoAuthoredBy": true
+  "includeCoAuthoredBy": true,
+  "hooks": {
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/log-subagent-history.mjs"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/trigger-blog-admin.mjs"
+          }
+        ]
+      }
+    ]
+  }
 }
