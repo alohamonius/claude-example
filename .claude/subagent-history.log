@@ -1,3 +1,0 @@
-# Subagent Activity History Log
-# Format: [timestamp] Agent: {name} | Task: {description} | Session: {id}
-# This file tracks all subagent activities automatically via SubagentStop hook

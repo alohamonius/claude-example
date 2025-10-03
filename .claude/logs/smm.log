@@ -1,2 +1,9 @@
-[2025-10-03T17:37:52.660Z] PRE | Agent: smm | Task: Generate small article | Session: f44365f1-0f9e-4623-8f48-20db5f9790fa
-[2025-10-03T17:38:06.389Z] POST | Agent: smm | Status: UNKNOWN | Details: No result | Session: f44365f1-0f9e-4623-8f48-20db5f9790fa
+[2025-10-03T18:26:56.160Z] PRE | Agent: smm | Task: Generate and insert article | Session: f44365f1-0f9e-4623-8f48-20db5f9790fa
+[2025-10-03T18:30:36.484Z] PRE | Agent: smm | Task: Generate simple post no websearch | Session: f44365f1-0f9e-4623-8f48-20db5f9790fa
+[2025-10-03T18:31:08.660Z] POST | Agent: smm | Status: UNKNOWN | Details: No result | Session: f44365f1-0f9e-4623-8f48-20db5f9790fa
+[2025-10-03T18:31:46.935Z] PRE | Agent: smm | Task: Generate small article without websearch | Session: d32c36a7-15bf-4d5d-a576-18a05f8c0be1
+[2025-10-03T18:32:01.207Z] STOP | Agent: smm | Session: d32c36a7-15bf-4d5d-a576-18a05f8c0be1
+[2025-10-03T18:32:01.457Z] POST | Agent: smm | Status: UNKNOWN | Details: No result | Session: d32c36a7-15bf-4d5d-a576-18a05f8c0be1
+[2025-10-03T18:33:19.155Z] PRE | Agent: smm | Task: SMM research and generate article | Session: d32c36a7-15bf-4d5d-a576-18a05f8c0be1
+[2025-10-03T18:35:04.080Z] STOP | Agent: smm | Session: d32c36a7-15bf-4d5d-a576-18a05f8c0be1
+[2025-10-03T18:35:04.330Z] POST | Agent: smm | Status: UNKNOWN | Details: No result | Session: d32c36a7-15bf-4d5d-a576-18a05f8c0be1

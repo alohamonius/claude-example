@@ -13,6 +13,16 @@ import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
+// Debug log helper - writes to file instead of stderr
+const debugLogPath = path.join(__dirname, '..', 'logs', 'subagent-stop-debug.log')
+const debugLog = (msg) => {
+  try {
+    fs.appendFileSync(debugLogPath, `${msg}\n`, 'utf-8')
+  } catch (e) {
+    // Ignore if can't write debug log
+  }
+}
+
 // Read hook input from stdin
 let inputData = ''
 process.stdin.on('data', (chunk) => {
@@ -24,8 +34,16 @@ process.stdin.on('end', () => {
     const hookInput = JSON.parse(inputData)
     const { session_id, transcript_path, stop_hook_active } = hookInput
 
+    // DEBUG: Log what SubagentStop receives
+    debugLog(`\n[DEBUG SubagentStop] Fired at ${new Date().toISOString()}`)
+    debugLog(`[DEBUG] Full hookInput: ${JSON.stringify(hookInput, null, 2)}`)
+    debugLog(`[DEBUG] session_id: ${session_id}`)
+    debugLog(`[DEBUG] transcript_path: ${transcript_path}`)
+    debugLog(`[DEBUG] stop_hook_active: ${stop_hook_active}`)
+
     // Prevent infinite loops
     if (stop_hook_active) {
+      debugLog(`[DEBUG] Skipping - stop_hook_active is true`)
       return
     }
 
@@ -41,11 +59,20 @@ process.stdin.on('end', () => {
     const transcriptContent = fs.readFileSync(transcript_path, 'utf-8')
     const lines = transcriptContent.trim().split('\n')
 
+    // DEBUG: Show transcript info
+    debugLog(`[DEBUG] Transcript lines count: ${lines.length}`)
+    debugLog(`[DEBUG] First 500 chars of transcript:\n${transcriptContent.substring(0, 500)}`)
+    debugLog(`[DEBUG] Last 500 chars of transcript:\n${transcriptContent.substring(Math.max(0, transcriptContent.length - 500))}`)
+
     let subagentName = 'unknown'
     let taskDescription = 'completed task'
 
-    // Find the last Task tool use in the transcript
-    for (const line of lines) {
+    // Find the MOST RECENT Task tool use by parsing in REVERSE order
+    let found = false
+    for (let i = lines.length - 1; i >= 0; i--) {
+      if (found) break
+
+      const line = lines[i]
       try {
         const turn = JSON.parse(line)
 
@@ -54,6 +81,9 @@ process.stdin.on('end', () => {
             if (block.type === 'tool_use' && block.name === 'Task') {
               subagentName = block.input?.subagent_type || 'unknown'
               taskDescription = block.input?.description || block.input?.prompt?.substring(0, 60) || 'task'
+              debugLog(`[DEBUG] Found most recent Task tool use: ${subagentName}`)
+              found = true // Stop searching - we found the most recent one
+              break
             }
           }
         }
@@ -62,6 +92,8 @@ process.stdin.on('end', () => {
         continue
       }
     }
+
+    debugLog(`[DEBUG] Final subagent name determined: ${subagentName}`)
 
     // Create history entry - simplified STOP event
     const timestamp = new Date().toISOString()

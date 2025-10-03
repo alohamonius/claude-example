@@ -19,6 +19,11 @@ process.stdin.on('end', () => {
   try {
     const toolUse = JSON.parse(inputData)
 
+    // DEBUG: Log when hook fires
+    console.error(`[DEBUG] trigger-blog-admin.mjs fired at ${new Date().toISOString()}`)
+    console.error(`[DEBUG] tool_name: ${toolUse.tool_name}`)
+    console.error(`[DEBUG] file_path: ${toolUse.tool_input?.file_path}`)
+
     // Check if this is a Write tool call
     if (toolUse.tool_name === 'Write') {
       const filePath = toolUse.tool_input?.file_path || ''
